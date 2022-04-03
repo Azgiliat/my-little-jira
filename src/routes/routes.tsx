@@ -27,4 +27,13 @@ export const routes: IRoute[] = [
     path: 'top',
     element: <FirstComponent />, // React.lazy(() => import('@/components/FirstComponent')),
   },
+  {
+    layout: Layouts.TopAside,
+    path: 'top/top',
+    element: <FirstComponent />, // React.lazy(() => import('@/components/FirstComponent')),
+  },
+  {
+    path: 'tmp',
+    element: <FirstComponent />, // React.lazy(() => import('@/components/FirstComponent')),
+  },
 ];

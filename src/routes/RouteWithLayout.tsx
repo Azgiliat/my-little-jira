@@ -20,6 +20,7 @@ const LayoutComponent = (layoutName: Layouts) => {
 export default function RouteWithLayout(
   props: PropsWithChildren<{ route: IRoute; key: string }>,
 ) {
+  console.log(props);
   if (props.route.layout) {
     return (
       <Route key={props.key} element={LayoutComponent(props.route.layout)}>

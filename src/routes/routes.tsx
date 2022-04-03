@@ -13,6 +13,7 @@ export interface IRoute {
   layout?: Layouts;
   path: string;
   element: Element;
+  needAuth?: boolean;
   children?: IRoute[];
 }
 
@@ -25,6 +26,7 @@ export const routes: IRoute[] = [
   {
     layout: Layouts.TopAside,
     path: 'top',
+    needAuth: true,
     element: <FirstComponent />, // React.lazy(() => import('@/components/FirstComponent')),
   },
   {

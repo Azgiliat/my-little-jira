@@ -1,20 +1,18 @@
 import React, { useState } from 'react';
 
-import { ILogInContext, LogInContext } from '@/contexts/LogInContext';
+import { ILogInContext, LogInContext, User } from '@/contexts/LogInContext';
 import CreateRoutes from '@/routes/CreateRoutes';
+import './index.css';
 
 function App() {
-  const [loggedIn, setLoggedIn] = useState<ILogInContext>({
-    loggedIn: false,
+  const [loggedIn, setLoggedIn] = useState<{ user: User }>({
     user: null,
   });
   const logInCtx: ILogInContext = {
-    loggedIn: loggedIn.loggedIn,
     user: loggedIn.user,
     setUser(user) {
       setLoggedIn(() => {
         return {
-          loggedIn: !!user,
           user,
         };
       });

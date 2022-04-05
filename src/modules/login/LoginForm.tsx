@@ -21,23 +21,23 @@ export function LoginForm(
   };
 
   return (
-    <form className="w-full flex justify-center items-center">
+    <form className="w-full flex justify-center items-center mb-5">
       <input
         type="text"
         name="login"
         onInput={setInputData}
-        className="border-2 mr-2"
+        className="border-2 mr-2 p-2 rounded"
       />
       <input
         type="password"
         name="pass"
         onInput={setInputData}
-        className="border-2 mr-2"
+        className="border-2 mr-2 p-2 rounded"
       />
       <button
         type="button"
         onClick={() => props.tryLogin(state)}
-        className="border-2"
+        className="border-2 p-2 rounded"
       >
         Log in
       </button>

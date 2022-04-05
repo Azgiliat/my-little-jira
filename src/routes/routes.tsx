@@ -1,8 +1,7 @@
 import React, { LazyExoticComponent } from 'react';
 
-import { PageNotFound } from '@/components/PageNotFound';
-
 import { Layouts } from '@/layouts/Layouts';
+import { PageNotFound } from '@/modules/PageNotFound/PageNotFound';
 import { LoginIndex } from '@/modules/login/LoginIndex';
 
 type Element = LazyExoticComponent<() => JSX.Element> | JSX.Element;

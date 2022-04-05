@@ -1,0 +1,39 @@
+.line-dots-loader {
+  @apply inline-flex;
+}
+
+.line-dots-loader span {
+  @apply w-6 h-6;
+  @apply bg-blue-500;
+  @apply rounded-full;
+}
+
+.line-dots-loader span:nth-child(1) {
+  animation: dot-pulse 1.8s infinite;
+}
+
+.line-dots-loader span:nth-child(2) {
+  animation: dot-pulse 1.8s infinite 0.4s;
+}
+
+.line-dots-loader span:nth-child(3) {
+  animation: dot-pulse 1.8s infinite 0.8s;
+}
+
+.line-dots-loader span:not(:last-child) {
+  @apply mr-2;
+}
+
+@keyframes dot-pulse {
+  0% {
+    opacity: 0;
+  }
+
+  30% {
+    opacity: 1;
+  }
+
+  60%, 100% {
+    opacity: 0;
+  }
+}

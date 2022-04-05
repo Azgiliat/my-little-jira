@@ -1,13 +1,9 @@
 import React, { LazyExoticComponent } from 'react';
 
-import { LogInForm } from '@/components/LogInForm';
-
 import { Layouts } from '@/layouts/Layouts';
+import { LoginIndex } from '@/modules/login/LoginIndex';
 
-type Element =
-  | LazyExoticComponent<() => JSX.Element>
-  | JSX.Element
-  | (() => JSX.Element);
+type Element = LazyExoticComponent<() => JSX.Element> | JSX.Element;
 
 export interface IRoute {
   layout?: Layouts;
@@ -21,6 +17,6 @@ export const routes: IRoute[] = [
   {
     path: '/login',
     layout: Layouts.TopAside,
-    element: <LogInForm />,
+    element: <LoginIndex />,
   },
 ];

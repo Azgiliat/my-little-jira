@@ -4,7 +4,7 @@ import { Route } from 'react-router-dom';
 import { Layouts } from '@/layouts/Layouts';
 import LeftAside from '@/layouts/LeftAside';
 import TopAside from '@/layouts/TopAside';
-import { IRoute } from '@/routes/routes';
+import { IRoute, isTopLevelRoute, ITopLevelRoute } from '@/routes/types';
 
 const LayoutComponent = (layoutName: Layouts) => {
   switch (layoutName) {
@@ -18,11 +18,14 @@ const LayoutComponent = (layoutName: Layouts) => {
 };
 
 export default function RouteWithLayout(
-  props: PropsWithChildren<{ route: IRoute; key: string }>,
+  props: PropsWithChildren<{ route: ITopLevelRoute | IRoute; key: string }>,
 ) {
-  if (props.route.layout) {
+  if (isTopLevelRoute(props.route) && props.route?.layout) {
     return (
-      <Route key={props.key} element={LayoutComponent(props.route.layout)}>
+      <Route
+        key={`with-layout-${props.key}`}
+        element={LayoutComponent(props.route.layout)}
+      >
         <Route
           key={props.key}
           element={props.route.element}

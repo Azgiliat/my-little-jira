@@ -1,20 +1,18 @@
-import React, { LazyExoticComponent } from 'react';
+import React from 'react';
 
 import { Layouts } from '@/layouts/Layouts';
-import { PageNotFound } from '@/modules/PageNotFound/PageNotFound';
 import { LoginIndex } from '@/modules/login/LoginIndex';
+import { PageNotFound } from '@/modules/page-not-found/PageNotFound';
+import { StartPage } from '@/modules/start-page/StartPage';
+import { ITopLevelRoute } from '@/routes/types';
 
-type Element = LazyExoticComponent<() => JSX.Element> | JSX.Element;
-
-export interface IRoute {
-  layout?: Layouts;
-  path: string;
-  element: Element;
-  needAuth?: boolean;
-  children?: IRoute[];
-}
-
-export const routes: IRoute[] = [
+export const routes: ITopLevelRoute[] = [
+  {
+    path: '/',
+    layout: Layouts.TopAside,
+    element: <StartPage />,
+    needAuth: true,
+  },
   {
     path: '/login',
     layout: Layouts.TopAside,

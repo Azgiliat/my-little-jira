@@ -1,24 +1,16 @@
-import React, { useContext } from 'react';
-import { Navigate, Route } from 'react-router-dom';
+import React, { ReactNode, useContext } from 'react';
+import { Navigate, Outlet } from 'react-router-dom';
 
 import { LogInContext } from '@/contexts/LogInContext';
-import RouteWithLayout from '@/routes/RouteWithLayout';
-import { IRoute } from '@/routes/routes';
 
-export function ProtectedRoute(options: { route: IRoute; key: string }) {
+export function AuthenticatedRoute(props: {
+  children?: ReactNode | undefined;
+}) {
   const logInCtx = useContext(LogInContext);
 
-  if (options.route.needAuth) {
-    return logInCtx.user ? (
-      RouteWithLayout(options)
-    ) : (
-      <Route
-        path={options.route.path}
-        key={options.key}
-        element={<Navigate to={'/'} />}
-      />
-    );
+  if (!logInCtx.user) {
+    return <Navigate to={'/login'} replace />;
   }
 
-  return RouteWithLayout(options);
+  return props.children ? <>{props.children}</> : <Outlet />;
 }

@@ -1,10 +1,11 @@
-import React, { ChangeEvent, Props, PropsWithChildren, useState } from 'react';
+import React, { ChangeEvent, PropsWithChildren, useState } from 'react';
 
 import { LoginOptions } from '@/http/auth';
 
 export function LoginForm(
   props: PropsWithChildren<{
     tryLogin: (options: LoginOptions) => Promise<void>;
+    isLoading: boolean;
   }>,
 ) {
   const [state, setState] = useState<LoginOptions>({
@@ -37,7 +38,8 @@ export function LoginForm(
       <button
         type="button"
         onClick={() => props.tryLogin(state)}
-        className="border-2 p-2 rounded"
+        className="border-2 p-2 rounded disabled:cursor-not-allowed"
+        disabled={props.isLoading}
       >
         Log in
       </button>

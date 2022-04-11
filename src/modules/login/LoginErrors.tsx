@@ -6,7 +6,7 @@ export function LoginErrors(props: PropsWithChildren<{ errors: string[] }>) {
   };
 
   return (
-    <ul>
+    <ul className="mb-5">
       {props.errors.map((error) => (
         <li className="mx-auto w-1/2" key={error}>
           <LoginError error={error} />

@@ -1,7 +1,8 @@
-import { UserData, USERS, USERS_DATA } from '@/mocks/users';
+import { User } from '@/http/dto/auth';
+import { USERS, USERS_DATA } from '@/mocks/users';
 
 export type LoginOptions = { login: string; pass: string };
-export function login(options: LoginOptions): Promise<UserData> {
+export function login(options: LoginOptions): Promise<User> {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       const user = USERS.find((userObj) => userObj.login === options.login);

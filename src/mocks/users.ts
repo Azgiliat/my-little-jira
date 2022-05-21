@@ -1,12 +1,4 @@
-export type UserAuth = {
-  login: string;
-  pass: string;
-};
-export type UserData = {
-  login: string;
-  firstName: string;
-  lastName?: string;
-};
+import { User, UserAuth } from '@/http/dto/auth';
 
 export const USERS: UserAuth[] = [
   {
@@ -14,7 +6,7 @@ export const USERS: UserAuth[] = [
     pass: 'admin',
   },
 ];
-export const USERS_DATA: Record<string, UserData> = {
+export const USERS_DATA: Record<string, User> = {
   admin: {
     login: 'admin',
     firstName: 'Admin',

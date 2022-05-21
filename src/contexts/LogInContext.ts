@@ -1,9 +1,9 @@
 import { createContext } from 'react';
 
-export type User = string | null;
+import { User } from '@/http/dto/auth';
 
 export interface ILogInContext {
-  user: User;
+  user: User | null;
   setUser: (user: User) => void;
 }
 

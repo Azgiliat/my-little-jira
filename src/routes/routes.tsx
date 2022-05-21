@@ -4,6 +4,7 @@ import { Layouts } from '@/layouts/Layouts';
 import { LoginIndex } from '@/modules/login/LoginIndex';
 import { PageNotFound } from '@/modules/page-not-found/PageNotFound';
 import { StartPage } from '@/modules/start-page/StartPage';
+import { TaskGroupsList } from '@/modules/tasks/TaskGroupsList';
 import { ITopLevelRoute } from '@/routes/types';
 
 export const routes: ITopLevelRoute[] = [
@@ -11,6 +12,12 @@ export const routes: ITopLevelRoute[] = [
     path: '/',
     layout: Layouts.TopAside,
     element: <StartPage />,
+    needAuth: true,
+  },
+  {
+    path: '/tasks',
+    layout: Layouts.TopAside,
+    element: <TaskGroupsList />,
     needAuth: true,
   },
   {

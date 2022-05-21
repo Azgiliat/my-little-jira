@@ -17,13 +17,16 @@ export function LoginIndex() {
     setIsLoading(true);
     try {
       const user = await login(options);
-      loginCtx.setUser(user.firstName);
+      loginCtx.setUser(user);
       setErrors([]);
-      navigate('/');
     } catch (err) {
       setErrors([err as string]);
     } finally {
       setIsLoading(false);
+    }
+
+    if (loginCtx.user) {
+      navigate('/');
     }
   };
 

@@ -1,0 +1,18 @@
+.base-button {
+  @apply p-2;
+  @apply rounded-2xl;
+  @apply bg-black;
+  @apply text-white;
+}
+.base-button--primary {
+  @apply bg-emerald-500;
+}
+.base-button--secondary {
+  @apply bg-gray-500;
+}
+.base-button--error {
+  @apply bg-red-500;
+}
+.base-button--warning {
+  @apply bg-orange-500;
+}

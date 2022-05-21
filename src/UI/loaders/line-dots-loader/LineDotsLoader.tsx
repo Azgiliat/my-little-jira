@@ -1,5 +1,4 @@
 import React from 'react';
-import './line-dots-loader.css';
 
 export function LineDotsLoader() {
   return (

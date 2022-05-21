@@ -1,6 +1,8 @@
 import React, { useContext } from 'react';
 import { Outlet } from 'react-router-dom';
 
+import { TopAsideTabs } from '@/components/TopAsideTabs';
+
 import { LogInContext } from '@/contexts/LogInContext';
 
 export default function TopAside() {
@@ -9,7 +11,12 @@ export default function TopAside() {
   return (
     <div className="w-full">
       <div className="p-5 mb-5 shadow-xl">
-        <p>{user ? `You are logged in as ${user}` : 'You are not logged in'}</p>
+        <p>
+          {user
+            ? `You are logged in as ${user.login}`
+            : 'You are not logged in'}
+        </p>
+        <TopAsideTabs />
       </div>
       <Outlet />
     </div>

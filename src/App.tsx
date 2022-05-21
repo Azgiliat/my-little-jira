@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 
-import { ILogInContext, LogInContext, User } from '@/contexts/LogInContext';
+import { ILogInContext, LogInContext } from '@/contexts/LogInContext';
+import { User } from '@/http/dto/auth';
 import CreateRoutes from '@/routes/CreateRoutes';
 import './index.css';
+import './UI/index.css';
 
 function App() {
-  const [loggedIn, setLoggedIn] = useState<{ user: User }>({
+  const [loggedIn, setLoggedIn] = useState<{ user: User | null }>({
     user: null,
   });
   const logInCtx: ILogInContext = {

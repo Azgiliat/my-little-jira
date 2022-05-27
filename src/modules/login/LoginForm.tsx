@@ -1,5 +1,7 @@
 import React, { ChangeEvent, PropsWithChildren, useState } from 'react';
 
+import { UIElementsType } from '@/UI/UIElementsType';
+import { BaseButton } from '@/UI/buttons/BaseButton';
 import { LoginOptions } from '@/http/auth';
 
 export function LoginForm(
@@ -35,14 +37,14 @@ export function LoginForm(
         onInput={setInputData}
         className="border-2 mr-2 p-2 rounded"
       />
-      <button
-        type="button"
+      <BaseButton
+        type={UIElementsType.Primary}
         onClick={() => props.tryLogin(state)}
         className="border-2 p-2 rounded disabled:cursor-not-allowed"
         disabled={props.isLoading}
       >
         Log in
-      </button>
+      </BaseButton>
     </form>
   );
 }

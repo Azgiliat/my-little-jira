@@ -11,12 +11,12 @@ export default function TopAside() {
   return (
     <div className="w-full">
       <div className="p-5 mb-5 shadow-xl">
-        <p>
+        <p className="mb-2">
           {user
             ? `You are logged in as ${user.login}`
             : 'You are not logged in'}
         </p>
-        <TopAsideTabs />
+        {user && <TopAsideTabs />}
       </div>
       <Outlet />
     </div>

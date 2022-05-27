@@ -1,5 +1,5 @@
 .base-button {
-  @apply p-2;
+  @apply py-2 px-5;
   @apply rounded-2xl;
   @apply bg-black;
   @apply text-white;

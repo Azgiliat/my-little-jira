@@ -7,10 +7,12 @@ export function BaseButton({
   children,
   type,
   className,
+  disabled,
 }: PropsWithChildren<{
   onClick?: () => void;
   type: UIElementsType;
   className?: string;
+  disabled?: boolean;
 }>) {
   const clickHandler = () => {
     if (onClick) {
@@ -20,6 +22,7 @@ export function BaseButton({
 
   return (
     <button
+      disabled={disabled}
       onClick={clickHandler}
       className={`base-button base-button--${type} ${className || ''}`}
       type="button"

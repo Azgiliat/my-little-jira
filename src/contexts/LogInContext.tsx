@@ -6,29 +6,33 @@ import { User } from '@/http/dto/auth';
 export interface ILogInContext {
   user: User | null;
   isLoading: boolean;
-  setUser: (user: User) => void;
+  errors: string[];
   login: (options: LoginOptions) => Promise<void>;
+  logout: () => void;
 }
 
 export const LogInContext = createContext<ILogInContext>({
   user: null,
   isLoading: false,
+  errors: [],
   async login() {
     this.user = null;
   },
-  setUser(user) {
-    this.user = user;
+  logout() {
+    this.user = null;
   },
 });
 
 type State = {
   user: null | User;
   isLoading: boolean;
+  errors: string[];
 };
 
 enum ActionType {
   SetLoading,
   SetUser,
+  SetErrors,
 }
 
 type ActionLogin = {
@@ -41,7 +45,12 @@ type ActionSetUser = {
   payload: User | null;
 };
 
-type Action = ActionLogin | ActionSetUser;
+type ActionSetErrors = {
+  type: ActionType.SetErrors;
+  payload: string[];
+};
+
+type Action = ActionLogin | ActionSetUser | ActionSetErrors;
 
 export const LogInContextProvider = function ({
   children,
@@ -55,6 +64,8 @@ export const LogInContextProvider = function ({
           return { ...state, isLoading: action.payload };
         case ActionType.SetUser:
           return { ...state, user: action.payload };
+        case ActionType.SetErrors:
+          return { ...state, errors: action.payload };
       }
 
       return { ...state };
@@ -62,14 +73,13 @@ export const LogInContextProvider = function ({
     {
       user: null,
       isLoading: false,
+      errors: [],
     },
   );
   const logInCtx: ILogInContext = {
     user: state.user,
     isLoading: state.isLoading,
-    setUser(user: User) {
-      dispatch({ type: ActionType.SetUser, payload: user });
-    },
+    errors: [],
     async login(options) {
       dispatch({
         type: ActionType.SetLoading,
@@ -87,6 +97,12 @@ export const LogInContextProvider = function ({
           payload: false,
         });
       }
+    },
+    logout() {
+      dispatch({
+        type: ActionType.SetUser,
+        payload: null,
+      });
     },
   };
 

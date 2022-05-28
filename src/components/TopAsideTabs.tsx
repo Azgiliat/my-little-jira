@@ -22,11 +22,6 @@ export function TopAsideTabs() {
       value: 'profile',
       path: '/profile',
     },
-    {
-      title: 'Login',
-      value: 'login',
-      path: '/login',
-    },
   ];
   const navigate = useNavigate();
   const goToTab = (tab: Tab) => {

@@ -1,7 +1,7 @@
 import React, { PropsWithChildren } from 'react';
 
 import { TaskGroup as TaskGroupType } from '@/http/dto/tasks';
-import { TaskCard } from '@/modules/tasks/TaskCard';
+import { TaskCard } from '@/modules/board/tasks/TaskCard';
 
 export function TaskGroup({
   taskGroup,

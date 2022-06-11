@@ -11,7 +11,7 @@ export function TaskCard({ task }: { task: Task }) {
   };
 
   return (
-    <div className="bg-white rounded-xl p-2 relative">
+    <div className="bg-white rounded-xl p-2 pl-4 relative">
       <div
         className={`absolute w-2 top-0 left-0 h-full rounded-l-xl ${
           taskPriorityColor[task.priority]

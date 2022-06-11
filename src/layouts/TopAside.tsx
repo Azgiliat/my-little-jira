@@ -11,7 +11,7 @@ export default function TopAside() {
   const { user, logout } = useContext(LogInContext);
 
   return (
-    <div className="w-full">
+    <div className="h-screen w-full flex flex-col flex-grow">
       <div className="p-5 mb-5 shadow-xl flex">
         <div>
           <p className="mb-2">
@@ -31,7 +31,9 @@ export default function TopAside() {
           </BaseButton>
         )}
       </div>
-      <Outlet />
+      <div className="flex-grow overflow-auto px-5 flex-col flex">
+        <Outlet />
+      </div>
     </div>
   );
 }

@@ -1,10 +1,10 @@
 import React from 'react';
 
 import { Layouts } from '@/layouts/Layouts';
+import { Board } from '@/modules/board/Board';
 import { LoginIndex } from '@/modules/login/LoginIndex';
 import { PageNotFound } from '@/modules/page-not-found/PageNotFound';
 import { StartPage } from '@/modules/start-page/StartPage';
-import { TaskGroupsList } from '@/modules/tasks/TaskGroupsList';
 import { ITopLevelRoute } from '@/routes/types';
 
 export const routes: ITopLevelRoute[] = [
@@ -17,7 +17,7 @@ export const routes: ITopLevelRoute[] = [
   {
     path: '/tasks',
     layout: Layouts.TopAside,
-    element: <TaskGroupsList />,
+    element: <Board />,
     needAuth: true,
   },
   {

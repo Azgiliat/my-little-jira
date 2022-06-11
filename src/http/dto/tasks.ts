@@ -1,4 +1,12 @@
 import { User } from '@/http/dto/auth';
+import { ISODateString } from '@/http/dto/common';
+
+export enum TaskPriority {
+  Low,
+  Medium,
+  High,
+  Critical,
+}
 
 export type TaskGroup = {
   name: string;
@@ -6,7 +14,11 @@ export type TaskGroup = {
 };
 
 export type Task = {
+  id: string;
   title: string;
   description: string;
-  assignedTo: User;
+  taskGroup: string;
+  assignedTo: User | null;
+  priority: TaskPriority;
+  dueDate?: ISODateString;
 };

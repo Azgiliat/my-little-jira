@@ -55,6 +55,9 @@ export function useDrag(
     if (evt.movementX < 0 && evt.movementX > availableDelata.left) {
       itemCoords.x += evt.movementX;
     }
+    if (evt.movementX > 0 && evt.movementX < availableDelata.right) {
+      itemCoords.x += evt.movementX;
+    }
 
     itemCoords.y += evt.movementY;
     dragItem.current.style.transform = `translateX(${itemCoords.x}px) translateY(${itemCoords.y}px)`;

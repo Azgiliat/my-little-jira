@@ -12,7 +12,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  build:
+  lint:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
@@ -25,3 +25,14 @@ jobs:
         cache: 'yarn'
     - run: yarn install
     - run: yarn lint
+  build:
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+      with:
+        node-version: '14'
+        cache: 'yarn'
+    - run: yarn install
+    - run: yarn build

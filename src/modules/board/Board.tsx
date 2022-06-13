@@ -75,7 +75,7 @@ export function Board() {
   }, []);
 
   return (
-    <div className="flex-grow flex flex-col">
+    <div className="flex-grow flex flex-col bg-gray-100 p-2">
       {isLoading ? (
         <div className="flex justify-center">
           <LineDotsLoader />

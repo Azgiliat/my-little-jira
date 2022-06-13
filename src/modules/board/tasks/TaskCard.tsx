@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useRef } from 'react';
 
+import { useDrag } from '@/UI/drag-n-drop/useDrag';
 import { Task, TaskPriority } from '@/http/dto/tasks';
 
 export function TaskCard({ task }: { task: Task }) {
+  const cardRef = useRef(null);
   const taskPriorityColor = {
     [TaskPriority.Critical]: 'bg-red-500',
     [TaskPriority.High]: 'bg-yellow-500',
@@ -10,8 +12,10 @@ export function TaskCard({ task }: { task: Task }) {
     [TaskPriority.Low]: 'bg-emerald-500',
   };
 
+  useDrag('board', cardRef);
+
   return (
-    <div className="bg-white rounded-xl p-2 pl-4 relative">
+    <div ref={cardRef} className="bg-white rounded-xl p-2 pl-4 relative">
       <div
         className={`absolute w-2 top-0 left-0 h-full rounded-l-xl ${
           taskPriorityColor[task.priority]

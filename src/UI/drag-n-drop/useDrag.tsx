@@ -1,6 +1,11 @@
 import { MutableRefObject, useEffect } from 'react';
 
 import { useDragContainers } from '@/UI/drag-n-drop/useDragContainer';
+import {
+  activateDropPlaces,
+  checkIsOverDropPlace,
+  deactivateDropPlaces,
+} from '@/UI/drag-n-drop/useDrop';
 
 const needToStopMove = (element: HTMLElement, parent: HTMLElement) => {
   const {
@@ -27,6 +32,7 @@ const needToStopMove = (element: HTMLElement, parent: HTMLElement) => {
 export function useDrag(
   dragContainerName: string,
   dragItem: MutableRefObject<HTMLElement | null>,
+  withCopy = false,
 ) {
   const { containers } = useDragContainers();
   const itemCoords = {
@@ -36,10 +42,12 @@ export function useDrag(
 
   const onMouseUp = (evt: MouseEvent) => {
     evt.preventDefault();
+    deactivateDropPlaces();
     containers[dragContainerName].removeEventListener('mousemove', onMouseMove);
   };
   const onMouseDown = (evt: MouseEvent) => {
     evt.preventDefault();
+    activateDropPlaces();
     containers[dragContainerName].addEventListener('mousemove', onMouseMove);
   };
   const onMouseMove = (evt: MouseEvent) => {
@@ -47,20 +55,26 @@ export function useDrag(
       console.warn('Cant move drag item');
       return;
     }
-    const availableDelata = needToStopMove(
+    const availableDelta = needToStopMove(
       dragItem.current,
       containers[dragContainerName],
     );
 
-    if (evt.movementX < 0 && evt.movementX > availableDelata.left) {
+    if (evt.movementX < 0 && evt.movementX > availableDelta.left) {
       itemCoords.x += evt.movementX;
     }
-    if (evt.movementX > 0 && evt.movementX < availableDelata.right) {
+    if (evt.movementX > 0 && evt.movementX < availableDelta.right) {
       itemCoords.x += evt.movementX;
+    }
+    if (evt.movementY > 0 && evt.movementY < availableDelta.bottom) {
+      itemCoords.y += evt.movementY;
+    }
+    if (evt.movementY < 0 && evt.movementY > availableDelta.top) {
+      itemCoords.y += evt.movementY;
     }
 
-    itemCoords.y += evt.movementY;
     dragItem.current.style.transform = `translateX(${itemCoords.x}px) translateY(${itemCoords.y}px)`;
+    checkIsOverDropPlace(dragItem.current);
   };
 
   useEffect(() => {

@@ -1,10 +1,12 @@
-import { MutableRefObject, useEffect } from 'react';
+import { useEffect } from 'react';
 
+import { DragNDropRef, DragPayload } from '@/UI/drag-n-drop/types';
 import { useDragContainers } from '@/UI/drag-n-drop/useDragContainer';
 import {
   activateDropPlaces,
-  checkIsOverDropPlace,
+  findActiveDropPlace,
   deactivateDropPlaces,
+  runActiveDropPlaceHandler,
 } from '@/UI/drag-n-drop/useDrop';
 
 const needToStopMove = (element: HTMLElement, parent: HTMLElement) => {
@@ -31,7 +33,8 @@ const needToStopMove = (element: HTMLElement, parent: HTMLElement) => {
 
 export function useDrag(
   dragContainerName: string,
-  dragItem: MutableRefObject<HTMLElement | null>,
+  dragItem: DragNDropRef,
+  payload: DragPayload,
   withCopy = false,
 ) {
   const { containers } = useDragContainers();
@@ -42,6 +45,7 @@ export function useDrag(
 
   const onMouseUp = (evt: MouseEvent) => {
     evt.preventDefault();
+    runActiveDropPlaceHandler(payload);
     deactivateDropPlaces();
     containers[dragContainerName].removeEventListener('mousemove', onMouseMove);
   };
@@ -74,7 +78,7 @@ export function useDrag(
     }
 
     dragItem.current.style.transform = `translateX(${itemCoords.x}px) translateY(${itemCoords.y}px)`;
-    checkIsOverDropPlace(dragItem.current);
+    findActiveDropPlace(dragItem.current);
   };
 
   useEffect(() => {

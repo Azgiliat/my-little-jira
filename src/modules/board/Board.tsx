@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useMemo, useState } from 'react';
 
 import { LineDotsLoader } from '@/UI/loaders/line-dots-loader/LineDotsLoader';
+import { BoardContext } from '@/contexts/BoardContext';
 import { LogInContext } from '@/contexts/LogInContext';
 import { getBoardForUser } from '@/http/board';
 import { Board as BoardType } from '@/http/dto/board';
@@ -27,6 +28,22 @@ export function Board() {
     () => groupTasks(tasks, board),
     [tasks, board],
   );
+  const moveTaskFromGroupToGroup = (taskId: string, to: string) => {
+    setTasks((prevTasks) => {
+      const taskToMove = prevTasks.find((task) => task.id === taskId);
+
+      if (!taskToMove) {
+        return prevTasks;
+      }
+
+      taskToMove.taskGroup = to;
+
+      return [...prevTasks];
+    });
+  };
+  const boardContext = {
+    moveTaskFromGroupToGroup,
+  };
 
   const loadBoardForUser = async (): Promise<BoardType | null> => {
     let response = null;
@@ -75,17 +92,19 @@ export function Board() {
   }, []);
 
   return (
-    <div className="flex-grow flex flex-col bg-gray-100 p-2">
-      {isLoading ? (
-        <div className="flex justify-center">
-          <LineDotsLoader />
-        </div>
-      ) : (
-        <>
-          <h3 className="font-bold">{board?.title || ''}</h3>
-          <TaskGroupsList taskGroups={taskGroups} />
-        </>
-      )}
-    </div>
+    <BoardContext.Provider value={boardContext}>
+      <div className="flex-grow flex flex-col bg-gray-100 p-2">
+        {isLoading ? (
+          <div className="flex justify-center">
+            <LineDotsLoader />
+          </div>
+        ) : (
+          <>
+            <h3 className="font-bold">{board?.title || ''}</h3>
+            <TaskGroupsList taskGroups={taskGroups} />
+          </>
+        )}
+      </div>
+    </BoardContext.Provider>
   );
 }

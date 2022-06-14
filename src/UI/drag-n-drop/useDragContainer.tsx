@@ -1,4 +1,6 @@
-import { MutableRefObject, useEffect } from 'react';
+import { useEffect } from 'react';
+
+import { DragNDropRef } from '@/UI/drag-n-drop/types';
 
 const containers: Record<string, HTMLElement> = {};
 
@@ -6,10 +8,7 @@ export function useDragContainers() {
   return { containers };
 }
 
-export function useDragContainer(
-  name: string,
-  container: MutableRefObject<HTMLElement | null>,
-) {
+export function useDragContainer(name: string, container: DragNDropRef) {
   const unregisterDragContainer = () => {
     delete containers[name];
   };

@@ -1,20 +1,30 @@
-import { MutableRefObject, useEffect } from 'react';
+import { useEffect } from 'react';
 
-const dropPlacesMap: Map<MutableRefObject<HTMLElement>, DOMRect> = new Map();
+import { DragNDropRef, OnDropHandler } from '@/UI/drag-n-drop/types';
+
+const dropPlaces: Map<DragNDropRef, DOMRect> = new Map();
+const dropEndHandlers: Map<DragNDropRef, OnDropHandler> = new Map();
+let activeDropPlace: DragNDropRef | null = null;
 
 export function activateDropPlaces() {
-  for (const dropPlace of dropPlacesMap.keys()) {
-    dropPlace.current.classList.add('outline-dashed');
+  for (const dropPlace of dropPlaces.keys()) {
+    dropPlace.current?.classList.add('outline-dashed');
   }
 }
 
 export function deactivateDropPlaces() {
-  for (const dropPlace of dropPlacesMap.keys()) {
-    dropPlace.current.classList.remove('outline-dashed');
+  for (const dropPlace of dropPlaces.keys()) {
+    dropPlace.current?.classList.remove('outline-dashed');
   }
 }
 
-export function checkIsOverDropPlace(
+export function runActiveDropPlaceHandler(payload: Record<string, unknown>) {
+  if (activeDropPlace) {
+    dropEndHandlers.get(activeDropPlace)?.(payload);
+  }
+}
+
+export function findActiveDropPlace(
   dragItem: HTMLElement,
   intersectionRatio = 0.6,
 ) {
@@ -26,7 +36,8 @@ export function checkIsOverDropPlace(
     width: elementWidth,
     height: elementHeight,
   } = dragItem.getBoundingClientRect();
-  dropPlacesMap.forEach((value, key) => {
+
+  for (const [key, value] of dropPlaces) {
     const height =
       Math.min(elementBottom, value.bottom) - Math.max(elementTop, value.top);
     const width =
@@ -37,17 +48,22 @@ export function checkIsOverDropPlace(
       intersectionSquare > 0 &&
       elementWidth * elementHeight * intersectionRatio <= intersectionSquare
     ) {
-      console.log('over drop place');
+      activeDropPlace = key;
+      return;
     }
-  });
+  }
+
+  activeDropPlace = null;
 }
 
-export function useDrop(dropPlace: MutableRefObject<HTMLElement>) {
+export function useDrop(dropPlace: DragNDropRef, onDrop: OnDropHandler) {
   useEffect(() => {
-    dropPlacesMap.set(dropPlace, dropPlace.current.getBoundingClientRect());
+    dropPlaces.set(dropPlace, dropPlace.current.getBoundingClientRect());
+    dropEndHandlers.set(dropPlace, onDrop);
 
     return () => {
-      dropPlacesMap.delete(dropPlace);
+      dropPlaces.delete(dropPlace);
+      dropEndHandlers.delete(dropPlace);
     };
   });
 }

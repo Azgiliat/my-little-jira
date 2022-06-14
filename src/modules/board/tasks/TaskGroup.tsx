@@ -1,7 +1,8 @@
-import React, { PropsWithChildren, useRef } from 'react';
+import React, { PropsWithChildren, useContext, useRef } from 'react';
 
 import { useDrop } from '@/UI/drag-n-drop/useDrop';
-import { TaskGroup as TaskGroupType } from '@/http/dto/tasks';
+import { BoardContext } from '@/contexts/BoardContext';
+import { Task, TaskGroup as TaskGroupType } from '@/http/dto/tasks';
 import { TaskCard } from '@/modules/board/tasks/TaskCard';
 
 export function TaskGroup({
@@ -9,7 +10,12 @@ export function TaskGroup({
   className,
 }: PropsWithChildren<{ taskGroup: TaskGroupType; className: string }>) {
   const groupRef = useRef(null);
-  useDrop(groupRef);
+  const boardContext = useContext(BoardContext);
+  const onDropTask = (task: Task) => {
+    boardContext.moveTaskFromGroupToGroup(task.id, taskGroup.name);
+  };
+
+  useDrop(groupRef, onDropTask);
 
   return (
     <div ref={groupRef} className={`${className} bg-gray-200 p-2`}>

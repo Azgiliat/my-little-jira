@@ -12,7 +12,7 @@ export function TaskCard({ task }: { task: Task }) {
     [TaskPriority.Low]: 'bg-emerald-500',
   };
 
-  useDrag('board', cardRef);
+  useDrag('board', cardRef, task);
 
   return (
     <div ref={cardRef} className="bg-white rounded-xl p-2 pl-4 relative">

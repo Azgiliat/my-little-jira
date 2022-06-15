@@ -42,16 +42,33 @@ export function useDrag(
     x: 0,
     y: 0,
   };
+  const moveDragItem = () => {
+    if (!dragItem.current) {
+      return;
+    }
+    dragItem.current.style.transform = `translateX(${itemCoords.x}px) translateY(${itemCoords.y}px)`;
+  };
 
   const onMouseUp = (evt: MouseEvent) => {
     evt.preventDefault();
-    runActiveDropPlaceHandler(payload);
+    dragItem.current.classList.remove('cursor-grabbing');
+    const activeDropPlace = findActiveDropPlace(dragItem);
+
+    if (activeDropPlace) {
+      runActiveDropPlaceHandler(payload);
+    } else {
+      itemCoords.x = 0;
+      itemCoords.y = 0;
+      moveDragItem();
+    }
+
     deactivateDropPlaces();
     containers[dragContainerName].removeEventListener('mousemove', onMouseMove);
   };
   const onMouseDown = (evt: MouseEvent) => {
     evt.preventDefault();
     activateDropPlaces();
+    dragItem.current.classList.add('cursor-grabbing');
     containers[dragContainerName].addEventListener('mousemove', onMouseMove);
   };
   const onMouseMove = (evt: MouseEvent) => {
@@ -77,8 +94,7 @@ export function useDrag(
       itemCoords.y += evt.movementY;
     }
 
-    dragItem.current.style.transform = `translateX(${itemCoords.x}px) translateY(${itemCoords.y}px)`;
-    findActiveDropPlace(dragItem.current);
+    moveDragItem();
   };
 
   useEffect(() => {
@@ -87,12 +103,17 @@ export function useDrag(
       return;
     }
 
+    dragItem.current.classList.add('cursor-grab');
     dragItem.current.addEventListener('mousedown', onMouseDown);
     dragItem.current.addEventListener('mouseup', onMouseUp);
 
     return () => {
+      dragItem.current?.classList.remove('cursor-grab');
       dragItem.current?.removeEventListener('mousedown', onMouseDown);
       dragItem.current?.removeEventListener('mouseup', onMouseUp);
+      if (dragItem.current) {
+        dragItem.current.style.transform = '';
+      }
     };
   });
 }

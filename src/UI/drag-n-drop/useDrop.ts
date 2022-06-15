@@ -25,9 +25,14 @@ export function runActiveDropPlaceHandler(payload: Record<string, unknown>) {
 }
 
 export function findActiveDropPlace(
-  dragItem: HTMLElement,
+  dragItem: DragNDropRef,
   intersectionRatio = 0.6,
 ) {
+  if (!dragItem.current) {
+    activeDropPlace = null;
+    return activeDropPlace;
+  }
+
   const {
     top: elementTop,
     right: elementRight,
@@ -35,7 +40,7 @@ export function findActiveDropPlace(
     left: elementLeft,
     width: elementWidth,
     height: elementHeight,
-  } = dragItem.getBoundingClientRect();
+  } = dragItem.current.getBoundingClientRect();
 
   for (const [key, value] of dropPlaces) {
     const height =
@@ -49,21 +54,24 @@ export function findActiveDropPlace(
       elementWidth * elementHeight * intersectionRatio <= intersectionSquare
     ) {
       activeDropPlace = key;
-      return;
+      return activeDropPlace;
     }
   }
 
   activeDropPlace = null;
+  return activeDropPlace;
 }
 
 export function useDrop(dropPlace: DragNDropRef, onDrop: OnDropHandler) {
   useEffect(() => {
-    dropPlaces.set(dropPlace, dropPlace.current.getBoundingClientRect());
-    dropEndHandlers.set(dropPlace, onDrop);
+    if (dropPlace.current) {
+      dropPlaces.set(dropPlace, dropPlace.current?.getBoundingClientRect());
+      dropEndHandlers.set(dropPlace, onDrop);
 
-    return () => {
-      dropPlaces.delete(dropPlace);
-      dropEndHandlers.delete(dropPlace);
-    };
+      return () => {
+        dropPlaces.delete(dropPlace);
+        dropEndHandlers.delete(dropPlace);
+      };
+    }
   });
 }

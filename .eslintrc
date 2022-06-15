@@ -7,14 +7,24 @@
   "parserOptions": {
     "ecmaVersion": 2021
   },
-  "plugins": ["html", "import"],
+  "plugins": [
+    "html",
+    "import"
+  ],
   "extends": [
     "plugin:@typescript-eslint/recommended",
     "plugin:react/recommended",
     "prettier"
   ],
   "rules": {
-    "no-console": "warn",
+    "no-console": [
+      "error",
+      {
+        "allow": [
+          "warn"
+        ]
+      }
+    ],
     "no-debugger": "warn",
     "import/order": [
       "error",
@@ -52,8 +62,12 @@
   },
   "overrides": [
     {
-      "files": ["**/*.spec.ts"],
-      "rules": { "@typescript-eslint/no-explicit-any": "off" }
+      "files": [
+        "**/*.spec.ts"
+      ],
+      "rules": {
+        "@typescript-eslint/no-explicit-any": "off"
+      }
     }
   ]
 }

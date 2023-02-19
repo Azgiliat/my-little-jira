@@ -1,10 +1,8 @@
-export type User = {
-  login: string;
-  firstName: string;
-  lastName?: string;
-};
+import { User } from 'firebase/auth';
 
-export type UserAuth = {
+type UserAuth = {
   login: string;
   pass: string;
 };
+
+export type { User, UserAuth };

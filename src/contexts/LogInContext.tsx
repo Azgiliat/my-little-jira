@@ -1,5 +1,6 @@
 import React, { createContext, ReactNode, useReducer } from 'react';
 
+import { getAuthObserver } from '@/firebase/auth';
 import { login, LoginOptions } from '@/http/auth';
 import { User } from '@/http/dto/auth';
 
@@ -67,8 +68,6 @@ export const LogInContextProvider = function ({
         case ActionType.SetErrors:
           return { ...state, errors: action.payload };
       }
-
-      return { ...state };
     },
     {
       user: null,
@@ -76,6 +75,14 @@ export const LogInContextProvider = function ({
       errors: [],
     },
   );
+
+  getAuthObserver((user) =>
+    dispatch({
+      type: ActionType.SetUser,
+      payload: user,
+    }),
+  );
+
   const logInCtx: ILogInContext = {
     user: state.user,
     isLoading: state.isLoading,

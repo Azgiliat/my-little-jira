@@ -6,9 +6,13 @@ import { TopAsideTabs } from '@/components/TopAsideTabs';
 import { UIElementsType } from '@/UI/UIElementsType';
 import { BaseButton } from '@/UI/buttons/BaseButton';
 import { LogInContext } from '@/contexts/LogInContext';
+import { useLoadWithState } from '@/custom-hooks/useLoadWithState';
+import { logout } from '@/firebase/auth';
 
 export default function TopAside() {
-  const { user, logout } = useContext(LogInContext);
+  const { user } = useContext(LogInContext);
+  const tryLogout = () => logout();
+  const { executeRequest } = useLoadWithState(tryLogout);
 
   return (
     <div className="h-screen w-full flex flex-col flex-grow">
@@ -16,7 +20,7 @@ export default function TopAside() {
         <div>
           <p className="mb-2">
             {user
-              ? `You are logged in as ${user.login}`
+              ? `You are logged in as ${user.displayName}`
               : 'You are not logged in'}
           </p>
           {user && <TopAsideTabs />}
@@ -25,7 +29,7 @@ export default function TopAside() {
           <BaseButton
             className="ml-auto self-end"
             type={UIElementsType.Primary}
-            onClick={logout}
+            onClick={executeRequest}
           >
             Выйти
           </BaseButton>

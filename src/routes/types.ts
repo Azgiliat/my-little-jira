@@ -1,8 +1,8 @@
-import { LazyExoticComponent } from 'react';
+import { ReactElement } from 'react';
 
 import { Layouts } from '@/layouts/Layouts';
 
-export type Element = LazyExoticComponent<() => JSX.Element> | JSX.Element;
+export type Element = ReactElement;
 export type ITopLevelRoute = {
   layout?: Layouts;
   path: string;

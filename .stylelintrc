@@ -3,7 +3,6 @@
     "stylelint-config-html",
     "stylelint-config-standard",
     "stylelint-config-rational-order",
-    "stylelint-config-prettier"
   ],
   "rules": {
     "selector-max-attribute": 1,
@@ -22,7 +21,6 @@
         ]
       }
     ],
-    "declaration-block-trailing-semicolon": null,
     "no-descending-specificity": null,
     "selector-class-pattern": [
       "[a-z]+",

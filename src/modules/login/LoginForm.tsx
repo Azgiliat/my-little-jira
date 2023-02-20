@@ -1,45 +1,32 @@
-import React, { ChangeEvent, PropsWithChildren, useState } from 'react';
+import React, { ChangeEvent, PropsWithChildren } from 'react';
 
 import { UIElementsType } from '@/UI/UIElementsType';
 import { BaseButton } from '@/UI/buttons/BaseButton';
-import { LoginOptions } from '@/http/auth';
 
 export function LoginForm(
   props: PropsWithChildren<{
-    tryLogin: (options: LoginOptions) => Promise<void>;
+    setLoginCredentials: (evt: ChangeEvent<HTMLInputElement>) => void;
+    tryLogin: () => Promise<void>;
     isLoading: boolean;
   }>,
 ) {
-  const [state, setState] = useState<LoginOptions>({
-    login: '',
-    pass: '',
-  });
-  const setInputData = (evt: ChangeEvent<HTMLInputElement>) => {
-    setState((prevState) => {
-      return {
-        ...prevState,
-        [evt.target.name]: evt.target.value,
-      };
-    });
-  };
-
   return (
     <form className="w-full flex justify-center items-center mb-5">
       <input
         type="text"
         name="login"
-        onInput={setInputData}
+        onInput={props.setLoginCredentials}
         className="border-2 mr-2 p-2 rounded"
       />
       <input
         type="password"
         name="pass"
-        onInput={setInputData}
+        onInput={props.setLoginCredentials}
         className="border-2 mr-2 p-2 rounded"
       />
       <BaseButton
         type={UIElementsType.Primary}
-        onClick={() => props.tryLogin(state)}
+        onClick={props.tryLogin}
         className="border-2 p-2 rounded disabled:cursor-not-allowed"
         disabled={props.isLoading}
       >

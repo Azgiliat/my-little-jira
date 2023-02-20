@@ -9,7 +9,7 @@ export function getTasksInBordByUser(
     setTimeout(() => {
       resolve(
         TASKS[boardTitle].filter(
-          (task) => task.assignedTo?.login === userLogin,
+          (task) => task.assignedTo?.displayName === userLogin,
         ),
       );
     }, 2000);

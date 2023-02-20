@@ -36,7 +36,7 @@ export function Board() {
     }
 
     try {
-      response = (await getBoardForUser(loginCtx.user.login))[0];
+      response = (await getBoardForUser(loginCtx.user.displayName || ''))[0];
     } catch {
       response = null;
     }

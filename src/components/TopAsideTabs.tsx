@@ -13,25 +13,19 @@ type Tab = {
 export function TopAsideTabs() {
   const tabs: Tab[] = [
     {
-      title: 'Задачи',
+      title: 'Tasks',
       value: 'tasks',
       path: '/tasks',
     },
     {
-      title: 'Профиль',
+      title: 'Profile',
       value: 'profile',
       path: '/profile',
     },
   ];
   const navigate = useNavigate();
   const goToTab = (tab: Tab) => {
-    switch (tab.value) {
-      case 'tasks':
-        navigate(tab.path);
-        break;
-      default:
-        break;
-    }
+    navigate(tab.path);
   };
 
   return (

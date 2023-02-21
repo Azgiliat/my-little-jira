@@ -8,7 +8,7 @@ import { useToasterContext } from '@/contexts/ToasterContext';
 import { useLoadWithState } from '@/custom-hooks/useLoadWithState';
 import { tryLogin } from '@/http/auth';
 import { LoginCredentials } from '@/http/dto/auth';
-import { LoginErrors } from '@/modules/login/LoginErrors';
+// import { LoginErrors } from '@/modules/login/LoginErrors';
 import { LoginForm } from '@/modules/login/LoginForm';
 
 export function LoginIndex() {
@@ -34,14 +34,28 @@ export function LoginIndex() {
     }
   });
 
-  const executeLogin = () =>
-    tryLogin(state).then(() => {
+  const executeLogin = () => tryLogin(state);
+  const { isLoading, executeRequest, errors, response } =
+    useLoadWithState(executeLogin);
+
+  useEffect(() => {
+    if (response !== null) {
       addNotification({
         type: UIElementsType.Primary,
         message: 'Login successful!',
       });
-    });
-  const { isLoading, executeRequest, errors } = useLoadWithState(executeLogin);
+    }
+  }, [response]);
+  useEffect(() => {
+    if (errors.length) {
+      for (const error of errors) {
+        addNotification({
+          type: UIElementsType.Error,
+          message: error,
+        });
+      }
+    }
+  }, [errors]);
 
   return (
     <section>
@@ -50,7 +64,7 @@ export function LoginIndex() {
         setLoginCredentials={setInputData}
         isLoading={isLoading}
       />
-      <LoginErrors errors={errors} />
+      {/*<LoginErrors errors={errors} />*/}
       <div className="flex justify-center">
         {isLoading && <LineDotsLoader />}
       </div>

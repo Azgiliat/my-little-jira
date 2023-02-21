@@ -1,9 +1,10 @@
-import { ChangeEvent, useContext, useEffect, useState } from 'react';
-import React from 'react';
+import React, { ChangeEvent, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { UIElementsType } from '@/UI/UIElementsType';
 import { LineDotsLoader } from '@/UI/loaders/line-dots-loader/LineDotsLoader';
 import { LogInContext } from '@/contexts/LogInContext';
+import { useToasterContext } from '@/contexts/ToasterContext';
 import { useLoadWithState } from '@/custom-hooks/useLoadWithState';
 import { tryLogin } from '@/http/auth';
 import { LoginCredentials } from '@/http/dto/auth';
@@ -13,6 +14,7 @@ import { LoginForm } from '@/modules/login/LoginForm';
 export function LoginIndex() {
   const navigate = useNavigate();
   const loginCtx = useContext(LogInContext);
+  const { addNotification } = useToasterContext();
   const [state, setState] = useState<LoginCredentials>({
     login: '',
     pass: '',
@@ -32,7 +34,13 @@ export function LoginIndex() {
     }
   });
 
-  const executeLogin = () => tryLogin(state);
+  const executeLogin = () =>
+    tryLogin(state).then(() => {
+      addNotification({
+        type: UIElementsType.Primary,
+        message: 'Login successful!',
+      });
+    });
   const { isLoading, executeRequest, errors } = useLoadWithState(executeLogin);
 
   return (

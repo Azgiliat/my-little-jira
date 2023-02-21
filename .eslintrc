@@ -7,12 +7,28 @@
   "parserOptions": {
     "ecmaVersion": 2021
   },
-  "plugins": ["html", "import"],
+  "plugins": [
+    "html",
+    "import"
+  ],
   "extends": [
     "plugin:@typescript-eslint/recommended",
     "plugin:react/recommended",
+    "plugin:import/recommended",
+    "plugin:import/typescript",
     "prettier"
   ],
+  "settings": {
+    "import/resolver": {
+      "typescript": {
+        "project": "./tsconfig.json"
+      },
+      "node": true
+    },
+    "react": {
+      "version": "detect"
+    }
+  },
   "rules": {
     "no-console": "warn",
     "no-debugger": "warn",
@@ -30,17 +46,6 @@
           "type",
           "unknown"
         ],
-        "pathGroups": [
-          {
-            "pattern": "@/components/**",
-            "group": "parent",
-            "position": "before"
-          },
-          {
-            "pattern": "./**",
-            "group": "sibling"
-          }
-        ],
         "alphabetize": {
           "order": "asc",
           "caseInsensitive": false
@@ -52,8 +57,12 @@
   },
   "overrides": [
     {
-      "files": ["**/*.spec.ts"],
-      "rules": { "@typescript-eslint/no-explicit-any": "off" }
+      "files": [
+        "**/*.spec.ts"
+      ],
+      "rules": {
+        "@typescript-eslint/no-explicit-any": "off"
+      }
     }
   ]
 }

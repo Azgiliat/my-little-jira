@@ -1,0 +1,13 @@
+version: '3.2'
+
+services:
+  front:
+    profiles:
+      - "build"
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    image: "front-react"
+    ports:
+      - "8080:80"
+#TODO add dev docker

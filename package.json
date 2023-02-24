@@ -14,7 +14,8 @@
     "lint:stylelint": "yarn stylelint --cache \"**/*.{html,css,vue}\"",
     "lint:stylelint:fix": "yarn lint:stylelint --fix",
     "lint": "yarn lint:eslint && yarn lint:prettier && yarn lint:stylelint",
-    "precommit": "yarn lint && yarn test && yarn build"
+    "precommit": "yarn lint && yarn test && yarn build",
+    "run:build": "docker-compose --profile build up"
   },
   "dependencies": {
     "firebase": "^9.17.1",

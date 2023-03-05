@@ -1,10 +1,9 @@
 import React, { useContext } from 'react';
 import { Outlet } from 'react-router-dom';
 
-import { TopAsideTabs } from '@/components/TopAsideTabs';
-
 import { UIElementsType } from '@/UI/UIElementsType';
 import { BaseButton } from '@/UI/buttons/BaseButton';
+import { TopAsideTabs } from '@/components/TopAsideTabs';
 import { LogInContext } from '@/contexts/LogInContext';
 import { useLoadWithState } from '@/custom-hooks/useLoadWithState';
 import { logout } from '@/firebase/auth';

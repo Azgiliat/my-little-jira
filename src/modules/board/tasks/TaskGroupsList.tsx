@@ -1,10 +1,8 @@
 import React, { PropsWithChildren } from 'react';
 
-import { TaskGroup as TaskGroupElement } from './TaskGroup';
-
 import { TaskGroup } from '@/http/dto/tasks';
 
-
+import { TaskGroup as TaskGroupElement } from './TaskGroup';
 
 export function TaskGroupsList({
   taskGroups,
